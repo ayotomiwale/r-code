@@ -1,0 +1,76 @@
+---
+title: "VADeaths"
+author: "David"
+date: "09/03/2022"
+output: html_document
+---
+
+## Exploratory Data Analysis
+
+### To perform EDA on the dataset, we have to find the summary of the dataset and some other descriptive statistics on the dataset.
+```{r}
+
+summary(VADeaths)
+
+
+boxplot(VADeaths, col = "pink")
+title(xlab = "Categories", ylab = "Count", main = "Road Deaths in Virginia")
+plot(VADeaths)
+
+
+VAD <- data.frame(VADeaths)
+var(VAD$Rural.Male)
+var(VAD$Rural.Female)
+var(VAD$Urban.Male)
+var(VAD$Urban.Female)
+
+sd(VAD$Rural.Male)
+sd(VAD$Rural.Female)
+sd(VAD$Urban.Male)
+sd(VAD$Urban.Female)
+```
+
+
+## Graphical Visualization on the dataset
+```{r}
+VADmeans <-  colMeans(VADeaths)
+VADmeans
+
+
+barplot(VADmeans, main = "Road Deaths in Virginia", xlab = "Categories", ylab = "Mean Deaths", col = 'gray') 
+
+barplot(VADeaths, beside = TRUE, col = c("lightblue", "mistyrose", "lightcyan","lavender", "cornsilk"), legend = TRUE, ylim = c(0, 100)) +
+title(main = "Death Rates in Virginia", font.main = 4)
+
+pie(VADmeans, col = c("red", "yellow", "green", "blue"))
+
+VADeaths <- data.frame(VADeaths)
+plot(VADeaths$Rural.Male, main = 'Death Rate in Virginia (Rural Male)', ylab = ' Count')
+
+barplot(VADeaths$Rural.Male, main = "Death Rates in Virginia (1940) per 1000 (Rural Male)", cex.axis = 1.5, cex.names = 1.5, cex.main = 1., xlab = 'Age Group', ylab = 'Count', col  = 'light blue')
+```
+
+
+## Statistical Analysis 
+
+```{r}
+VADeaths <- data.frame(VADeaths)
+# Linear regression model of number of death among Female in Rural area against Male in the same area
+
+
+mod = lm(Rural.Female ~ Rural.Male , data = VADeaths)
+summary(mod)
+plot(mod)
+
+
+
+
+cs <- chisq.test(VADeaths)
+cs
+
+#To show the expected value of death in each category and age group 
+cs$expected
+
+
+```
+
